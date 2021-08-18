@@ -8,20 +8,22 @@ public class MainControler {
     public static void main(String[] args) {
 //        new LoginFrm();
         MainControler.forwardControl("Login"); // new LoginFrm();와 동일한 역할.
+    } // main()
 
-    }
     // Singleton Pattern : 오직 1개의 인스턴스만 생성( 값을 저장해야하기 때문에)
     private static MainControler mainControler; // 자기 자신을 멤버변수로 가짐
     private UserVO session;
 
-    private MainControler() {}
-    public static MainControler getInstance() { // 메서드를 통해서만 인스턴스 생성가능. 인스턴스 생성없이 사용되는 메서드이기 때문에 static
+    private MainControler() {} // 메서드를 통해서만 인스턴스 생성가능.
+
+    public static MainControler getInstance() {  // 인스턴스 생성없이 사용되는 메서드이기 때문에 static
         if(mainControler == null) mainControler = new MainControler();
         return mainControler;
     } // getInstance()
 
     public UserVO getSession() { return session; } // getSession()
-    public void setSession(UserVO session) { this.session = session; } // setSession() ????????
+    public void setSession(UserVO session) { this.session = session; } // 매개변수로 들어온 UserVO의 모든 정보를 초기화.
+
     public static void forwardControl(String cmd) {
         if(cmd.equals("Login")) {
             new LoginFrmT();

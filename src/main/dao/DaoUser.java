@@ -23,7 +23,7 @@ public class DaoUser extends DaoSet {
                         rs.getInt(5), rs.getString(6),
                         rs.getDate(7), rs.getString(8), rs.getString(9)
                 );
-                // MainControler의 인스턴스르르 getInstance() 메서드를 통해 생성하고 setSession으로 user(UserVO)를 초기화.
+                // MainControler의 인스턴스를 getInstance() 메서드를 통해 생성하고 setSession으로 user(UserVO)를 초기화.
                 MainControler.getInstance().setSession(user);
             }
         } catch (SQLException e) {

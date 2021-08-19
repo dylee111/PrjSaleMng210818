@@ -29,7 +29,7 @@ public class UserVO {
     }
 
     // DEMO_USERS에 insert할 때.
-    public UserVO(String userName, String password, String id) {
+    public UserVO(String userName, String id, String password) {
         this.userName = userName;
         this.password = password;
         this.id = id;

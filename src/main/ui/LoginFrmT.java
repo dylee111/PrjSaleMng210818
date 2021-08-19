@@ -40,7 +40,9 @@ public class LoginFrmT extends BasicFrm implements ActionListener {
         lbPw = new JLabel("PW");
 
         tfId = new JTextField(10);
+        tfId.setText("ADMIN");
         pfPw = new JPasswordField(10);
+        pfPw.setText("1");
         btnLogin = new JButton("로그인");
         btnCancel = new JButton("취소");
         btnJoin = new JButton("가입");

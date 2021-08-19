@@ -40,8 +40,8 @@ public class DaoUser extends DaoSet {
 
         try {
             conn = connDB();
-            String sql = "INSERT INTO DEMO_USERS(USER_ID, USER_NAME, PASSWORD, CREATED_ON, QUOTA,PRODUCTS, EXPIRES_ON, ADMIN_USER, ID) " +
-                    "VALUES(demo_users_seq_nextval,?,?,sysdate, null, 'Y',null,'N',?)";
+            String sql = "INSERT INTO DEMO_USERS(USER_ID, USER_NAME, PASSWORD, CREATED_ON, QUOTA, PRODUCTS, EXPIRES_ON, ADMIN_USER, ID) " +
+                    "VALUES(demo_users_seq.nextval,?,?,sysdate, null, 'Y',null,'N', ?)";
             pstmt = conn.prepareStatement(sql);
             pstmt.setInt(1, vo.getUserId());      // sql 1번 물음표
             pstmt.setString(2, vo.getUserName()); // sql 2번 물음표

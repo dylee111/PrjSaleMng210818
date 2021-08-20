@@ -35,8 +35,12 @@ public class UserVO {
         this.id = id;
     }
 
-    public int getUserId() {
-        return userId;
+//    public int getUserId() {
+//        return userId;
+//    }
+
+    public String getPassword() {
+        return password;
     }
 
     public String getUserName() {

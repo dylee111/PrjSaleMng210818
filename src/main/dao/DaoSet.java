@@ -9,7 +9,7 @@ import java.sql.Statement;
 
 public class DaoSet {
     Connection conn; // 네트워크 통한 DB 연결 객체
-    PreparedStatement pstmt;// SQL을 사용할 수 있게 해주는 객체
+    PreparedStatement pstmt;// SQL을 사용할 수 있게 해주는 객체 // 복수의 행
     Statement stmt;
     ResultSet rs;// 쿼리를 응답받을 때 결과값을 담기위한 객체
 

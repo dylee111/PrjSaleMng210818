@@ -88,7 +88,7 @@ public class LoginFrmT extends BasicFrm implements ActionListener {
                 dispose();
                 MainControler.forwardControl("Main");
             }
-
+            dispose();
         } // btnLogin
         if(e.getSource() == btnCancel) dispose();
 //        if(e.getSource() == btnJoin) new RegisterFrm();

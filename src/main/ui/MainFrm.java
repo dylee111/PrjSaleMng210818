@@ -18,7 +18,7 @@ public class MainFrm extends BasicFrm {
     private JPanel[] pnls;
 
     public MainFrm() {
-        super("", 900, 600);
+        super("", 950, 600);
         // MainControler의 인스턴스를 getInstance() 메서드를 통해 생성하고 초기화된 값을 가져와서 UserName만 따로 불러옴.
         String title = MainControler.getInstance().getSession().getUserName() + "님 환영합니다.";
         setTitle(title);
@@ -41,6 +41,7 @@ public class MainFrm extends BasicFrm {
 
         for (int i = 0; i < lbArr.length; i++) {
             icons[i] = new ImageIcon("images/"+menus[i]+".png");
+            icons[i] = resizeImg(icons[i]);
             lbArr[i] = new JLabel(icons[i]);
             pnlNorth.add(lbArr[i]);
             pnlCenter.add(menus[i], pnls[i]); // pnlCenter에 menus[i]의 이름으로 pnls[i]을 쌓음 (Panel이름, Panel)
@@ -66,5 +67,15 @@ public class MainFrm extends BasicFrm {
         add(pnlNorth,"North");
         add(pnlCenter,"Center");
     }
+
+    private ImageIcon resizeImg(ImageIcon img){
+        int imgW = img.getIconWidth();
+        int imgH = img.getIconHeight();
+        int dynamicH = imgH*70/imgW;
+        Image image = img.getImage();
+        Image newImg = image.getScaledInstance(70, dynamicH,
+                java.awt.Image.SCALE_SMOOTH);
+        return img = new ImageIcon(newImg);
+    } // resizeImg()
 
 }

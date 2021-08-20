@@ -4,6 +4,7 @@ import dao.DaoUser;
 import vo.UserVO;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 import java.awt.Font;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -13,11 +14,16 @@ public class PnlUser extends JPanel {
     private JPasswordField pfPw;
     private JPasswordField pfRePw;
     private JTextField tfId;
-    private JTextField thSearch;
+    private JTextField tfSearch;
     private JTable table;
+    private DefaultTableModel model;
+
     public PnlUser() {
         setLayout(null);
-        DaoUser daoUser = new DaoUser();
+        DaoUser dao = new DaoUser();
+        // DefualtTableModel로 복수개의 데이터를 불러오기 위함.
+        model = new DefaultTableModel(
+                new String[]{"USER_ID","ID","이름","입사일","QUOTA","상품유무","퇴사일","관리자 여부"},0);
         // 사용자 등록
         JLabel lblNewLabel = new JLabel("\uC0AC\uC6A9\uC790 \uB4F1\uB85D");
         lblNewLabel.setFont(new Font("맑은 고딕", Font.PLAIN, 30));
@@ -94,10 +100,11 @@ public class PnlUser extends JPanel {
                     pfPw.requestFocus();
                     return;
                 }
-                daoUser.registerUser(new UserVO(name, id, pw));
-                daoUser.duplicateId(tfId.getText());
+//                dao.duplicateId(tfId.getText());
+                dao.registerUser(new UserVO(name, id, pw));
             }
-        }); // 등록 버튼 이벤트
+        }); // 등록 버튼 이벤트 끝
+
         btnRegister.setBounds(53, 308, 306, 52);
         add(btnRegister);
 
@@ -107,21 +114,36 @@ public class PnlUser extends JPanel {
         lbUserList.setBounds(387, 10, 161, 52);
         add(lbUserList);
 
-        thSearch = new JTextField();
-        thSearch.setBounds(445, 82, 250, 21);
-        add(thSearch);
-        thSearch.setColumns(10);
+        tfSearch = new JTextField();
+        tfSearch.setBounds(445, 82, 250, 21);
+        add(tfSearch);
+        tfSearch.setColumns(10);
 
         JButton btnSearch = new JButton("\uC0AC\uC6A9\uC790 \uC870\uD68C");
+
         btnSearch.setFont(new Font("굴림", Font.BOLD, 12));
         btnSearch.setBounds(716, 81, 118, 23);
         add(btnSearch);
 
-        JScrollPane scrollPane = new JScrollPane();
+
+
+
+        table = new JTable(new DefaultTableModel());
+        JScrollPane scrollPane = new JScrollPane(table);
         scrollPane.setBounds(445, 121, 389, 239);
         add(scrollPane);
+        // 사용자 정보 검색 버튼
+        btnSearch.addActionListener(e -> {
+//            DefaultTableModel model = (DefaultTableModel) table.getModel(); // DefaultTableModel : 복수개의 데이터를 다루기 위한 객체
+            // 다음 검색 시, 테이블 내용 초기화
+            while (table.getRowCount() > 0) {
+                model.removeRow(0);
+            }
+            String srch = tfSearch.getText();
+            model = dao.getUserList(model, srch);
+            table.setModel(model);
+            model.fireTableDataChanged();
+        }); // 사용자 정보 검색 버튼 끝
 
-        table = new JTable();
-        scrollPane.setRowHeaderView(table);
     }
 }

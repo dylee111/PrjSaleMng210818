@@ -1,18 +1,13 @@
 package ui;
 
 import dao.DaoCustomer;
+import jdk.nashorn.internal.scripts.JO;
 import vo.CustomerVO;
 
-import javax.swing.JPanel;
-import javax.swing.JLabel;
+import javax.swing.*;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import javax.swing.JTextField;
-import javax.swing.JComboBox;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.JButton;
 import javax.swing.table.DefaultTableModel;
 
 public class PnlCustomer extends JPanel {
@@ -32,6 +27,7 @@ public class PnlCustomer extends JPanel {
         setLayout(null);
 
         DaoCustomer daoC = new DaoCustomer();
+        model = new DefaultTableModel(new String[]{"고객명","연락처","주소"},0);
 
         JLabel lblNewLabel = new JLabel("\uACE0\uAC1D \uC815\uBCF4");
         lblNewLabel.setFont(new Font("맑은 고딕", Font.BOLD, 20));
@@ -137,12 +133,12 @@ public class PnlCustomer extends JPanel {
         lblNewLabel_2.setBounds(27, 222, 103, 45);
         add(lblNewLabel_2);
 
-        JScrollPane scrollPane = new JScrollPane();
+
+
+        table = new JTable(new DefaultTableModel());
+        JScrollPane scrollPane = new JScrollPane(table);
         scrollPane.setBounds(27, 310, 849, 124);
         add(scrollPane);
-
-        table = new JTable();
-        scrollPane.setColumnHeaderView(table);
 
         tfSearch = new JTextField();
         tfSearch.setBounds(27, 279, 197, 21);
@@ -153,6 +149,14 @@ public class PnlCustomer extends JPanel {
         JButton btnSearch = new JButton("\uACE0\uAC1D \uC870\uD68C");
         btnSearch.setBounds(236, 277, 91, 23);
         add(btnSearch);
+        btnSearch.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                model = daoC.getCustList(model, tfSearch.getText());
+                table.setModel(model);
+                model.fireTableDataChanged();
+            }
+        });
 
         JButton btnRegister = new JButton("\uB4F1\uB85D");
         // 고객 등록 이벤트
@@ -164,7 +168,13 @@ public class PnlCustomer extends JPanel {
                 String sAddress = tfAddress2.getText();
                 String city = tfCity.getText();
                 String state = cbState.getSelectedItem().toString();
-                int postal = Integer.parseInt(tfPostal.getText()) ;
+                int postal = 0;
+                try {
+                    postal = Integer.parseInt(tfPostal.getText());
+                } catch (NumberFormatException ex) {
+                    JOptionPane.showMessageDialog(null, "숫자로 된 우편번호를 입력하여 주십시오.");
+                    return;
+                }
                 String phone = tfPhone.getText();
                 String email = tfEmail.getText();
                 daoC.registerCust(new CustomerVO(fName, lName, fAddress, sAddress, city,

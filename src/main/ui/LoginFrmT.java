@@ -8,8 +8,7 @@ import vo.UserVO;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.*;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -49,6 +48,7 @@ public class LoginFrmT extends BasicFrm implements ActionListener {
         btnLogin.addActionListener(this);
         btnCancel.addActionListener(this);
         btnJoin.addActionListener(this);
+
     }
     @Override
     public void arrange() {
@@ -92,5 +92,7 @@ public class LoginFrmT extends BasicFrm implements ActionListener {
         } // btnLogin
         if(e.getSource() == btnCancel) dispose();
 //        if(e.getSource() == btnJoin) new RegisterFrm();
-    }
+    } //actionPerformed()
+
+
 }

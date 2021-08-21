@@ -3,6 +3,7 @@ package dao;
 import vo.CustomerVO;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
@@ -48,6 +49,7 @@ public class DaoCustomer extends DaoSet{
             pstmt.setInt(7,vo.getCustPostalCode());
             pstmt.setString(8,vo.getPhoneNumber1());
             pstmt.setString(9,vo.getCustEmail());
+
             int cnt = pstmt.executeUpdate();
 
             if(cnt > 0 ) {
@@ -84,6 +86,34 @@ public class DaoCustomer extends DaoSet{
         }
         return result;
     } // duplicatePhone()
+
+    public DefaultTableModel getCustList(DefaultTableModel model, String srch) {
+        String query;
+        model = new DefaultTableModel(new String[]{"이름","연락처","주소"},0);
+        try {
+            conn = connDB();
+            if(srch.equals("")){
+                query = "SELECT * FROM DEMO_CUSTOMERS ";
+            } else {
+                // 대, 소문자 구분 없이 검색.
+                query = "SELECT * FROM DEMO_CUSTOMERS WHERE UPPER(CUST_FIRST_NAME) = UPPER(?) ";
+            }
+            pstmt = conn.prepareStatement(query);
+            if(!srch.equals("")) pstmt.setString(1,srch);
+            rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+                String[] tmpArr = {rs.getString(2) + " " + rs.getString(3), rs.getString(9),
+                        rs.getString(4) + ", " + rs.getString(5) + ", " + rs.getString(6) + ", " + rs.getString(7) + ", " + "Postal Code : " + rs.getString(8)};
+
+                model.addRow(tmpArr);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return model;
+    }
 
     // state ComboBox 출력
     public Object[] getState() {

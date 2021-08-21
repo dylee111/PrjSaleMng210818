@@ -112,10 +112,9 @@ public class DaoUser extends DaoSet {
                 String[] tempArr = {rs.getInt(1)+"", rs.getString(9),
                         rs.getString(2), rs.getDate(4)+"",
                         rs.getInt(5)+"", rs.getString(6),
-                        rs.getDate(7)+"", rs.getString(8)
-                };
+                        rs.getDate(7)+"", rs.getString(8) };
                 model.addRow(tempArr);
-            }
+            } // while
         } catch (SQLException e) {
             e.printStackTrace();
         }

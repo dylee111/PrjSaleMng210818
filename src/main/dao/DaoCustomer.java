@@ -39,6 +39,7 @@ public class DaoCustomer extends DaoSet{
             if(duplicatePhone(vo.getPhoneNumber1())) return;
             String query = "INSERT INTO DEMO_CUSTOMERS(CUSTOMER_ID, CUST_FIRST_NAME, CUST_LAST_NAME, CUST_STREET_ADDRESS1, CUST_STREET_ADDRESS2, CUST_CITY, CUST_STATE, CUST_POSTAL_CODE, PHONE_NUMBER1, PHONE_NUMBER2, CREDIT_LIMIT, CUST_EMAIL) " +
                     "VALUES(DEMO_CUST_SEQ.nextval,?, ?, ?, ?, ? ,? ,? ,? ,null,1000,?)" ;
+
             pstmt = conn.prepareStatement(query);
             pstmt.setString(1,vo.getCustFirstName());
             pstmt.setString(2,vo.getCustLastName());
@@ -49,6 +50,11 @@ public class DaoCustomer extends DaoSet{
             pstmt.setInt(7,vo.getCustPostalCode());
             pstmt.setString(8,vo.getPhoneNumber1());
             pstmt.setString(9,vo.getCustEmail());
+            // email이 공백일 경우 null로 저장.
+            if(vo.getCustEmail().equals("")) {
+                query = "INSERT INTO DEMO_CUSTOMERS(CUSTOMER_ID, CUST_FIRST_NAME, CUST_LAST_NAME, CUST_STREET_ADDRESS1, CUST_STREET_ADDRESS2, CUST_CITY, CUST_STATE, CUST_POSTAL_CODE, PHONE_NUMBER1, PHONE_NUMBER2, CREDIT_LIMIT, CUST_EMAIL) " +
+                        "VALUES(DEMO_CUST_SEQ.nextval,?, ?, ?, ?, ? ,? ,? ,? ,null,1000,null)" ;
+            }
 
             int cnt = pstmt.executeUpdate();
 

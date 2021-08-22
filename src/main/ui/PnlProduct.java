@@ -156,5 +156,15 @@ public class PnlProduct extends JPanel{
 
             }
         }); // btnRegister 끝
+
+        JButton btnDel = new JButton("\uC0AD\uC81C");
+        btnDel.setBounds(346, 237, 91, 23);
+        add(btnDel);
+        btnDel.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new DaoProduct().delProd(table);
+            }
+        });
     }
 }

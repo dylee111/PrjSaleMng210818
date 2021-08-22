@@ -106,7 +106,6 @@ public class PnlSale extends JPanel {
             } // actionPerformed()
         });
 
-
         JLabel lblNewLabel_2 = new JLabel("\uC81C\uD488 \uC774\uBBF8\uC9C0");
         lblNewLabel_2.setFont(new Font("맑은 고딕", Font.BOLD, 16));
         lblNewLabel_2.setBounds(715, 59, 127, 23);

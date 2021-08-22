@@ -141,4 +141,31 @@ public class DaoCustomer extends DaoSet{
         }
         return result;
     } // getState()
+
+    // 고객 삭제
+    public void delCust(JTable table) {
+        boolean result = false;
+        DefaultTableModel model = (DefaultTableModel) table.getModel();
+        int row = table.getSelectedRow();
+        if(row < 0) return;
+
+        try {
+            conn = connDB();
+            String query = "DELETE FROM DEMO_CUSTOMERS WHERE PHONE_NUMBER1 = ? ";
+            pstmt = conn.prepareStatement(query);
+            pstmt.setString(1, (String) model.getValueAt(row, 1));
+            int cnt = pstmt.executeUpdate();
+
+            if(cnt > 0) {
+                JOptionPane.showMessageDialog(null, "해당 데이터를 삭제했습니다.");
+                result = true;
+            } else {
+                JOptionPane.showMessageDialog(null,"해당 데이터를 삭제하지 못했습니다..");
+                result = false;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        model.removeRow(row);
+    } // delCust()
 }

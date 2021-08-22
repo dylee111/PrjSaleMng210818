@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.Properties;
 
 public class DaoProduct extends DaoSet {
+    //
     public Object[] getCategoryAll() {
         Object[] result = null;
         String query = "SELECT DISTINCT CATEGORY FROM DEMO_PRODUCT_INFO ";
@@ -32,6 +33,7 @@ public class DaoProduct extends DaoSet {
         Object[] result = null;
         String query = "SELECT PRODUCT_ID, PRODUCT_NAME FROM DEMO_PRODUCT_INFO WHERE CATEGORY = ? ";
         ArrayList list = new ArrayList();
+
         try {
             conn = connDB();
             pstmt = conn.prepareStatement(query);
@@ -104,4 +106,31 @@ public class DaoProduct extends DaoSet {
         }
         return model;
     }
+
+    // 고객 삭제
+    public void delProd(JTable table) {
+        boolean result = false;
+        DefaultTableModel model = (DefaultTableModel) table.getModel();
+        int row = table.getSelectedRow();
+        if(row < 0) return;
+
+        try {
+            conn = connDB();
+            String query = "DELETE FROM DEMO_PRODUCT_INFO WHERE PRODUCT_NAME = ? ";
+            pstmt = conn.prepareStatement(query);
+            pstmt.setString(1, (String) model.getValueAt(row, 0));
+            int cnt = pstmt.executeUpdate();
+
+            if(cnt > 0) {
+                JOptionPane.showMessageDialog(null, "해당 물품을 삭제했습니다.");
+                result = true;
+            } else {
+                JOptionPane.showMessageDialog(null,"해당 물품을 삭제하지 못했습니다.");
+                result = false;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        model.removeRow(row);
+    } // delCust()
 } // Main 끝

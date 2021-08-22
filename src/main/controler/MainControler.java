@@ -12,7 +12,7 @@ public class MainControler {
 
     // Singleton Pattern : 오직 1개의 인스턴스만 생성( 값을 저장해야하기 때문에)
     private static MainControler mainControler; // 자기 자신을 멤버변수로 가짐
-    private UserVO session;
+    private UserVO session; // UserVO에서 넘어온 User에 대한 정보를 담는 인스턴스
 
     private MainControler() {} // 메서드를 통해서만 인스턴스 생성가능.
 
@@ -29,8 +29,6 @@ public class MainControler {
             new LoginFrmT();
         } else if(cmd.equals("Main")) {
             new MainFrm();
-        } else if(cmd.equals("Join")) {
-
         }
     } // forwardControl()
 }

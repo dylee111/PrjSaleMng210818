@@ -180,8 +180,24 @@ public class PnlCustomer extends JPanel {
                 daoC.registerCust(new CustomerVO(fName, lName, fAddress, sAddress, city,
                         state, postal, phone, email));
             }
-        }); // btnRegister Event (고객 등록)
+        }); //고객 등록
         btnRegister.setBounds(722, 92, 154, 101);
         add(btnRegister);
+
+        JButton btnDel = new JButton("\uC0AD\uC81C");
+        btnDel.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+            }
+        });
+
+        // 고객 삭제
+        btnDel.setBounds(338, 277, 91, 23);
+        add(btnDel);
+        btnDel.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+               new DaoCustomer().delCust(table);
+            }
+        }); // 고객 삭제
     }
 }

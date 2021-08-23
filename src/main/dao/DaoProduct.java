@@ -2,8 +2,10 @@ package dao;
 
 import vo.ProductVO;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Properties;
@@ -31,7 +33,9 @@ public class DaoProduct extends DaoSet {
 
     public Object[] getProductAll(String category) {
         Object[] result = null;
-        String query = "SELECT PRODUCT_ID, PRODUCT_NAME FROM DEMO_PRODUCT_INFO WHERE CATEGORY = ? ";
+        String query = "SELECT PRODUCT_ID, PRODUCT_NAME " +
+                "FROM DEMO_PRODUCT_INFO " +
+                "WHERE CATEGORY = ? ";
         ArrayList list = new ArrayList();
 
         try {
@@ -43,6 +47,7 @@ public class DaoProduct extends DaoSet {
             while (rs.next()) {
                 list.add(rs.getString(1) + " - " + rs.getString(2));
             } // while
+            // list를 다시 배열로 바꿈.
             result = list.toArray();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -88,9 +93,13 @@ public class DaoProduct extends DaoSet {
         try {
             conn = connDB();
             if(srch.equals("")){
-                query = "SELECT * FROM DEMO_PRODUCT_INFO ";
+                query = "SELECT * " +
+                        "FROM DEMO_PRODUCT_INFO " +
+                        "ORDER BY CATEGORY ASC ";
             } else {
-                query = "SELECT * FROM DEMO_PRODUCT_INFO WHERE UPPER(PRODUCT_NAME) = UPPER(?) ";
+                query = "SELECT * " +
+                        "FROM DEMO_PRODUCT_INFO " +
+                        "WHERE UPPER(PRODUCT_NAME) = UPPER(?) ";
             }
             pstmt = conn.prepareStatement(query);
             if(!srch.equals("")) pstmt.setString(1, srch);
@@ -107,7 +116,51 @@ public class DaoProduct extends DaoSet {
         return model;
     }
 
-    // 고객 삭제
+    // ComboBox에서 제품 선택 시, 해당 제품 가격 반환
+    public String getProdPrice(String pId) {
+        String query;
+        String result = "";
+
+        try {
+            conn = connDB();
+            query = "SELECT LIST_PRICE " +
+                    "FROM DEMO_PRODUCT_INFO " +
+                    "WHERE PRODUCT_ID = ? ";
+            pstmt = conn.prepareStatement(query);
+            pstmt.setInt(1,Integer.parseInt(pId));
+            rs = pstmt.executeQuery();
+
+            if(rs.next()) {
+                result = rs.getString(1);
+            }
+
+        } catch (SQLException e) {}
+        return result;
+    } // getProdPrice()
+
+    // 물품 사진 출력
+    public ImageIcon getProdImg(String pId) {
+        ImageIcon result = null;
+        System.out.println(pId);
+        String query = "SELECT PRODUCT_IMAGE " +
+                "FROM DEMO_PRODUCT_INFO " +
+                "WHERE PRODUCT_ID = ? ";
+        try {
+            conn = connDB();
+            pstmt = conn.prepareStatement(query);
+            pstmt.setInt(1,Integer.parseInt(pId));
+            rs = pstmt.executeQuery();
+
+            if(rs.next()) {
+                result = new ImageIcon(ImageIO.read(rs.getBinaryStream(1)));
+            }
+        } catch (SQLException | IOException e) {
+            e.printStackTrace();
+        }
+        return result;
+    } // getProdImg()
+
+    // 상품 삭제
     public void delProd(JTable table) {
         boolean result = false;
         DefaultTableModel model = (DefaultTableModel) table.getModel();
@@ -116,7 +169,8 @@ public class DaoProduct extends DaoSet {
 
         try {
             conn = connDB();
-            String query = "DELETE FROM DEMO_PRODUCT_INFO WHERE PRODUCT_NAME = ? ";
+            String query = "DELETE FROM DEMO_PRODUCT_INFO " +
+                    "WHERE PRODUCT_NAME = ? ";
             pstmt = conn.prepareStatement(query);
             pstmt.setString(1, (String) model.getValueAt(row, 0));
             int cnt = pstmt.executeUpdate();

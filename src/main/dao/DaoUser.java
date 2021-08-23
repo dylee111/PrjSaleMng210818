@@ -16,7 +16,8 @@ public class DaoUser extends DaoSet {
             conn = connDB();
             // query문 안에 ';'은 생략.
             // String query = "select * from demo_users where id='" + id + "' and password ='" + pw + "'";
-            String query = "select * from demo_users where id=? and password =?";
+            String query = "select * from demo_users " +
+                    "where id=? and password =?";
 
             pstmt = conn.prepareStatement(query); // SQL을 사용할 수 있게 해주는 객체
             pstmt.setString(1, id); // query 1번 물음표
@@ -71,7 +72,8 @@ public class DaoUser extends DaoSet {
 
         try {
             conn = connDB();
-            String sql = "SELECT ID FROM DEMO_USERS WHERE ID = ? ";
+            String sql = "SELECT ID FROM DEMO_USERS " +
+                    "WHERE ID = ? ";
             pstmt = conn.prepareStatement(sql);
             pstmt.setString(1,id);
             rs = pstmt.executeQuery();
@@ -99,7 +101,8 @@ public class DaoUser extends DaoSet {
             if(srch.equals("")) {
                 query = "SELECT * FROM DEMO_USERS";
             } else {
-                query = "SELECT * FROM DEMO_USERS WHERE USER_NAME = ? ";
+                query = "SELECT * FROM DEMO_USERS " +
+                        "WHERE USER_NAME = ? ";
             }
             pstmt = conn.prepareStatement(query);
             if(!srch.equals("")) { pstmt.setString(1, srch); }

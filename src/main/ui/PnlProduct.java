@@ -36,7 +36,7 @@ public class PnlProduct extends JPanel{
         fileChooser = new JFileChooser();
 
         JLabel lblNewLabel = new JLabel("\uC81C\uD488 \uB4F1\uB85D");
-        lblNewLabel.setFont(new Font("맑은 고딕", Font.BOLD, 25));
+        lblNewLabel.setFont(new Font("맑은 고딕", Font.BOLD, 20));
         lblNewLabel.setBounds(22, 20, 122, 34);
         add(lblNewLabel);
 
@@ -106,8 +106,6 @@ public class PnlProduct extends JPanel{
         lblNewLabel_2.setBounds(22, 193, 122, 34);
         add(lblNewLabel_2);
 
-
-
         table = new JTable();
         JScrollPane scrollPane = new JScrollPane(table);
         scrollPane.setBounds(22, 276, 863, 153);
@@ -152,7 +150,7 @@ public class PnlProduct extends JPanel{
                 }
                 String fileName = tfFileName.getText();
 //                System.out.println(date);
-                new DaoProduct().registerProd(new ProductVO(name,descrip,cate,price,fileName));
+                new DaoProduct().registerProd(new ProductVO(name, descrip, cate, price, fileName));
 
             }
         }); // btnRegister 끝

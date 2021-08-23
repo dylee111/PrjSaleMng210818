@@ -26,7 +26,7 @@ public class PnlUser extends JPanel {
                 new String[]{"USER_ID","ID","이름","입사일","QUOTA","상품유무","퇴사일","관리자 여부"},0);
         // 사용자 등록
         JLabel lblNewLabel = new JLabel("\uC0AC\uC6A9\uC790 \uB4F1\uB85D");
-        lblNewLabel.setFont(new Font("맑은 고딕", Font.PLAIN, 30));
+        lblNewLabel.setFont(new Font("맑은 고딕", Font.BOLD, 20));
         lblNewLabel.setBounds(12, 10, 161, 52);
         add(lblNewLabel);
 
@@ -110,7 +110,7 @@ public class PnlUser extends JPanel {
 
         // 사용자 조회
         JLabel lbUserList = new JLabel("\uC0AC\uC6A9\uC790 \uBAA9\uB85D");
-        lbUserList.setFont(new Font("맑은 고딕", Font.PLAIN, 30));
+        lbUserList.setFont(new Font("맑은 고딕", Font.BOLD, 20));
         lbUserList.setBounds(387, 10, 161, 52);
         add(lbUserList);
 

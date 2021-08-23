@@ -75,7 +75,9 @@ public class DaoCustomer extends DaoSet{
         boolean result = false;
         try {
             conn = connDB();
-            String query = "SELECT PHONE_NUMBER1 FROM DEMO_CUSTOMERS WHERE PHONE_NUMBER1 = ? ";
+            String query = "SELECT PHONE_NUMBER1 " +
+                    "FROM DEMO_CUSTOMERS " +
+                    "WHERE PHONE_NUMBER1 = ? ";
             pstmt = conn.prepareStatement(query);
             pstmt.setString(1,phoneNum);
             rs = pstmt.executeQuery();
@@ -102,7 +104,8 @@ public class DaoCustomer extends DaoSet{
                 query = "SELECT * FROM DEMO_CUSTOMERS ";
             } else {
                 // 대, 소문자 구분 없이 검색.
-                query = "SELECT * FROM DEMO_CUSTOMERS WHERE UPPER(CUST_FIRST_NAME) = UPPER(?) ";
+                query = "SELECT * FROM DEMO_CUSTOMERS " +
+                        "WHERE UPPER(CUST_FIRST_NAME) = UPPER(?) ";
             }
             pstmt = conn.prepareStatement(query);
             if(!srch.equals("")) pstmt.setString(1,srch);
@@ -124,7 +127,8 @@ public class DaoCustomer extends DaoSet{
     // state ComboBox 출력
     public Object[] getState() {
         Object[] result = null;
-        String query = "SELECT * FROM DEMO_STATES ORDER BY STATE_NAME ASC ";
+        String query = "SELECT * FROM DEMO_STATES " +
+                "ORDER BY STATE_NAME ASC ";
         ArrayList list = new ArrayList();
 
         try {
@@ -151,7 +155,8 @@ public class DaoCustomer extends DaoSet{
 
         try {
             conn = connDB();
-            String query = "DELETE FROM DEMO_CUSTOMERS WHERE PHONE_NUMBER1 = ? ";
+            String query = "DELETE FROM DEMO_CUSTOMERS " +
+                    "WHERE PHONE_NUMBER1 = ? ";
             pstmt = conn.prepareStatement(query);
             pstmt.setString(1, (String) model.getValueAt(row, 1));
             int cnt = pstmt.executeUpdate();
